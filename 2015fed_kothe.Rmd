@@ -1,0 +1,442 @@
+---
+title: "2015electionprovinces_kothe"
+author: "Angela Kothe"
+date: "4/17/2021"
+output: html_document
+---
+
+This is an R Markdown Doc, detailing the 2015 Federal Election in Canada, by Angela Kothe.
+
+Alberta:
+```{r pressure, echo=FALSE, fig.keep='last'}
+library(devtools)
+library(mapcan)
+library(tidyverse)
+library(socviz)
+library(scales)
+library(cowplot)
+
+#Alberta
+ab_ridings <- mapcan(boundaries = ridings,
+                     type = standard,
+                     province = AB)
+
+ggplot(ab_ridings, aes(x = long, y = lat, group = group)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Alberta Federal Electoral Ridings")
+
+ab_results <- mapcan::federal_election_results %>%
+  filter(election_year == 2015 & pr_alpha == "AB")
+
+ab_ridings <- inner_join(ab_results, ab_ridings, by = "riding_code")
+ab_riding_map <- ab_ridings %>%
+  ggplot(aes(x = long, y = lat, group = group, fill = party)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Alberta 2015 Federal Electoral Results")
+
+ab_riding_map +
+  scale_fill_manual(name = "Winning party",
+                    values = c("blue", "red", "Orange")) 
+
+```
+
+British Columbia:
+```{r pressure2, echo=FALSE, fig.keep='last'}
+#British Columbia
+bc_ridings <- mapcan(boundaries = ridings,
+                     type = standard,
+                     province = BC)
+
+ggplot(bc_ridings, aes(x = long, y = lat, group = group)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("British Columbia \nFederal Electoral Ridings")
+
+bc_results <- mapcan::federal_election_results %>%
+  filter(election_year == 2015 & pr_alpha == "BC")
+
+bc_ridings <- inner_join(bc_results, bc_ridings, by = "riding_code")
+bc_riding_map <- bc_ridings %>%
+  ggplot(aes(x = long, y = lat, group = group, fill = party)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("British Columbia \n2015 Federal Electoral Results")
+
+bc_riding_map +
+  scale_fill_manual(name = "Winning party",
+                    values = c("blue", "springgreen3", "red", "Orange")) 
+```
+
+Manitoba:
+```{r pressure3, echo=FALSE, fig.keep='last'}
+mb_ridings <- mapcan(boundaries = ridings,
+                     type = standard,
+                     province = MB)
+
+ggplot(mb_ridings, aes(x = long, y = lat, group = group)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Manitoba Federal Electoral Ridings")
+
+mb_results <- mapcan::federal_election_results %>%
+  filter(election_year == 2015 & pr_alpha == "MB")
+
+mb_ridings <- inner_join(mb_results, mb_ridings, by = "riding_code")
+mb_riding_map <- mb_ridings %>%
+  ggplot(aes(x = long, y = lat, group = group, fill = party)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Manitoba 2015 Federal Electoral Results")
+
+mb_riding_map +
+  scale_fill_manual(name = "Winning party",
+                    values = c("blue", "red", "Orange")) 
+```
+
+New Brunswick:
+```{r pressure4, echo=FALSE, fig.keep='last'}
+nb_ridings <- mapcan(boundaries = ridings,
+                     type = standard,
+                     province = NB)
+
+ggplot(nb_ridings, aes(x = long, y = lat, group = group)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("New Brunswick \nFederal Electoral Ridings")
+
+nb_results <- mapcan::federal_election_results %>%
+  filter(election_year == 2015 & pr_alpha == "NB")
+
+nb_ridings <- inner_join(nb_results, nb_ridings, by = "riding_code")
+nb_riding_map <- nb_ridings %>%
+  ggplot(aes(x = long, y = lat, group = group, fill = party)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("New Brunswick \n2015 Federal Electoral Results")
+
+nb_riding_map +
+  scale_fill_manual(name = "Winning party",
+                    values = c("red")) 
+```
+
+New Foundland and Labrador:
+```{r pressure5, echo=FALSE, fig.keep='last'}
+nl_ridings <- mapcan(boundaries = ridings,
+                     type = standard,
+                     province = NL)
+
+ggplot(nl_ridings, aes(x = long, y = lat, group = group)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("New Foundland and Labrador \nFederal Electoral Ridings")
+
+nl_results <- mapcan::federal_election_results %>%
+  filter(election_year == 2015 & pr_alpha == "NL")
+
+nl_ridings <- inner_join(nl_results, nl_ridings, by = "riding_code")
+nl_riding_map <- nl_ridings %>%
+  ggplot(aes(x = long, y = lat, group = group, fill = party)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("New Foundland and Labrador \n2015 Federal Electoral Results")
+
+nl_riding_map +
+  scale_fill_manual(name = "Winning party",
+                    values = c("red")) 
+```
+
+Northwest Territories:
+```{r pressure6, echo=FALSE, fig.keep='last'}
+nt_ridings <- mapcan(boundaries = ridings,
+                     type = standard,
+                     province = NT)
+
+ggplot(nt_ridings, aes(x = long, y = lat, group = group)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Northwest Territories Federal Electoral Ridings")
+
+nt_results <- mapcan::federal_election_results %>%
+  filter(election_year == 2015 & pr_alpha == "NT")
+
+nt_ridings <- inner_join(nt_results, nt_ridings, by = "riding_code")
+nt_riding_map <- nt_ridings %>%
+  ggplot(aes(x = long, y = lat, group = group, fill = party)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Northwest Territories 2015 Federal Electoral Results")
+
+nt_riding_map +
+  scale_fill_manual(name = "Winning party",
+                    values = c("red")) 
+```
+
+Nova Scotia:
+```{r pressure7, echo=FALSE, fig.keep='last'}
+ns_ridings <- mapcan(boundaries = ridings,
+                     type = standard,
+                     province = NS)
+
+ggplot(ns_ridings, aes(x = long, y = lat, group = group)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Nova Scotia \nFederal Electoral Ridings")
+
+ns_results <- mapcan::federal_election_results %>%
+  filter(election_year == 2015 & pr_alpha == "NS")
+
+ns_ridings <- inner_join(ns_results, ns_ridings, by = "riding_code")
+ns_riding_map <- ns_ridings %>%
+  ggplot(aes(x = long, y = lat, group = group, fill = party)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Nova Scotia \n2015 Federal Electoral Results")
+
+ns_riding_map +
+  scale_fill_manual(name = "Winning party",
+                    values = c("red")) 
+```
+
+Nunavut:
+```{r pressure8, echo=FALSE, fig.keep='last'}
+nu_ridings <- mapcan(boundaries = ridings,
+                     type = standard,
+                     province = NU)
+
+ggplot(nu_ridings, aes(x = long, y = lat, group = group)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Nunavut Federal Electoral Ridings")
+
+nu_results <- mapcan::federal_election_results %>%
+  filter(election_year == 2015 & pr_alpha == "NU")
+
+nu_ridings <- inner_join(nu_results, nu_ridings, by = "riding_code")
+nu_riding_map <- nu_ridings %>%
+  ggplot(aes(x = long, y = lat, group = group, fill = party)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Nunavut 2015 Federal Electoral Results")
+
+nu_riding_map +
+  scale_fill_manual(name = "Winning party",
+                    values = c("red"))
+```
+
+Ontario:
+```{r pressure9, echo=FALSE, fig.keep='last'}
+on_ridings <- mapcan(boundaries = ridings,
+                     type = standard,
+                     province = ON)
+
+ggplot(on_ridings, aes(x = long, y = lat, group = group)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Ontario Federal Electoral Ridings")
+
+on_results <- mapcan::federal_election_results %>%
+  filter(election_year == 2015 & pr_alpha == "ON")
+
+on_ridings <- inner_join(on_results, on_ridings, by = "riding_code")
+on_riding_map <- on_ridings %>%
+  ggplot(aes(x = long, y = lat, group = group, fill = party)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Ontario 2015 Federal Electoral Results")
+
+on_riding_map +
+  scale_fill_manual(name = "Winning party",
+                    values = c("blue", "red", "Orange")) 
+```
+
+Prince Edward Island:
+```{r pressure10, echo=FALSE, fig.keep='last'}
+pei_ridings <- mapcan(boundaries = ridings,
+                     type = standard,
+                     province = PE)
+
+ggplot(pei_ridings, aes(x = long, y = lat, group = group)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Prince Edward Island \nFederal Electoral Ridings")
+
+pei_results <- mapcan::federal_election_results %>%
+  filter(election_year == 2015 & pr_alpha == "PE")
+
+pei_ridings <- inner_join(pei_results, pei_ridings, by = "riding_code")
+pei_riding_map <- pei_ridings %>%
+  ggplot(aes(x = long, y = lat, group = group, fill = party)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Prince Edward Island \n2015 Federal Electoral Results")
+
+pei_riding_map +
+  scale_fill_manual(name = "Winning party",
+                    values = c("red")) 
+```
+
+Quebec:
+```{r pressure11, echo=FALSE, fig.keep='last'}
+qc_ridings <- mapcan(boundaries = ridings,
+                     type = standard,
+                     province = QC)
+
+ggplot(qc_ridings, aes(x = long, y = lat, group = group)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Quebec Federal Electoral Ridings")
+
+qc_results <- mapcan::federal_election_results %>%
+  filter(election_year == 2015 & pr_alpha == "QC")
+
+qc_ridings <- inner_join(qc_results, qc_ridings, by = "riding_code")
+qc_riding_map <- qc_ridings %>%
+  ggplot(aes(x = long, y = lat, group = group, fill = party)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Quebec 2015 Federal Electoral Results")
+
+qc_riding_map +
+  scale_fill_manual(name = "Winning party",
+                    values = c("skyblue", "blue", "red", "Orange", "springgreen3")) 
+```
+
+Saskatchewan:
+```{r pressure13, echo=FALSE, fig.keep='last'}
+sk_ridings <- mapcan(boundaries = ridings,
+                     type = standard,
+                     province = SK)
+
+ggplot(sk_ridings, aes(x = long, y = lat, group = group)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Saskatchewan Federal Electoral Ridings")
+
+sk_results <- mapcan::federal_election_results %>%
+  filter(election_year == 2015 & pr_alpha == "SK")
+
+sk_ridings <- inner_join(sk_results, sk_ridings, by = "riding_code")
+sk_riding_map <- sk_ridings %>%
+  ggplot(aes(x = long, y = lat, group = group, fill = party)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Saskatchewan 2015 Federal Electoral Results")
+
+sk_riding_map +
+  scale_fill_manual(name = "Winning party",
+                    values = c("blue", "red", "Orange")) 
+```
+
+```{r pressure74, echo=FALSE, fig.keep='last'}
+yt_ridings <- mapcan(boundaries = ridings,
+                     type = standard,
+                     province = YT)
+
+ggplot(yt_ridings, aes(x = long, y = lat, group = group)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Yukon Federal Electoral Ridings")
+
+yt_results <- mapcan::federal_election_results %>%
+  filter(election_year == 2015 & pr_alpha == "YK")
+
+yt_ridings <- inner_join(yt_results, yt_ridings, by = "riding_code")
+yt_riding_map <- yt_ridings %>%
+  ggplot(aes(x = long, y = lat, group = group, fill = party)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Yukon 2015 Federal Electoral Results")
+
+yt_riding_map +
+  scale_fill_manual(name = "Winning party",
+                    values = c("red"))
+```
+
+National Results:
+```{r pressure14, echo=FALSE, fig.keep='last'}
+#nation
+so_ridings <- mapcan(boundaries = ridings,
+                     type = standard)
+
+ggplot(so_ridings, aes(x = long, y = lat, group = group)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Federal Electoral Ridings")
+
+so_results <- mapcan::federal_election_results%>%
+filter(election_year == 2015)
+so_ridings <- inner_join(so_results, so_ridings, by = "riding_code")
+
+so_riding_map <- so_ridings %>%
+  ggplot(aes(x = long, y = lat, group = group, fill = party)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("2015 Federal Electoral Results")
+
+so_riding_map +
+  scale_fill_manual(name = "Winning party",
+                    values = c("skyblue", "blue", "green", "red", "orange")) 
+```
+
+Voter Turnout:
+```{r pressure15, echo=FALSE, fig.keep='last'}
+#voter turnout
+so_ridings <- mapcan(boundaries = ridings,
+                     type = standard)
+
+ggplot(so_ridings, aes(x = long, y = lat, group = group)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("Federal Electoral Ridings")
+
+so_results <- mapcan::federal_election_results%>%
+  filter(election_year == 2015)
+so_ridings <- inner_join(so_results, so_ridings, by = "riding_code")
+
+so_riding_map <- so_ridings %>%
+  ggplot(aes(x = long, y = lat, group = group, fill = voter_turnout)) +
+  geom_polygon() +
+  coord_fixed() +
+  theme_mapcan() +
+  ggtitle("2015 Federal Election Turnout")
+
+so_riding_map +  scale_fill_gradient(
+  name = "Voter Turnout",
+  low = "#132B43",
+  high = "#56B1F7",
+  space = "Lab",
+  na.value = "grey50",
+  guide = "colourbar",
+  aesthetics = "fill")
+```
