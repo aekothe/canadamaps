@@ -21,12 +21,12 @@ setwd("/Users/annkothe/Documents/GitHub/canadamaps/raster")
 bmap <- readOGR("lpr_000b21a_e/lpr_000b21a_e.shp")
 map.df <- fortify(map, region = "PRUID")
 
-#water
-wmap <- readOGR("ghy_000c06a_e/ghy_000c06a_e.shp")
+#elevation
+wmap <- readOGR("canvec_1M_CA_Hydro_shp/canvec_1M_CA_Hydro/watercourse_1.shp")
+wmap <- spTransform(wmap, CRS("+proj=longlat +ellps=WGS84 +datum=WGS84"))
 wmap.df <- fortify(wmap)
 
 #map
 ggplot(wmap.df, aes(long, lat, group = group)) +
-  geom_polygon(color = "blue", size = .3) +
-  coord_map(projection = "albers",  lat0 = 49, lat1 = 75) +
+  geom_polygon(color = "blue", fill = "white", size = .3) +
   theme_map()
